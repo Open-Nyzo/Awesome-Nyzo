@@ -15,3 +15,10 @@ This is the main community chat place.
 Old style forum by a community member, geared toward more permanent discussions like funding and reference material.
 
 https://forum.nyzo.community/
+
+## Bitcointalk
+
+Unofficial thread:
+
+- https://bitcointalk.org/index.php?topic=5079696.0
+
