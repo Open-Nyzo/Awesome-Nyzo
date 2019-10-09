@@ -2,6 +2,6 @@
 
 Social accounts from users - not official.
 
-## Twitter
+## Twitter
 
 - https://twitter.com/nyzo_currency
