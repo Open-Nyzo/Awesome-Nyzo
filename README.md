@@ -20,7 +20,7 @@ Feel free to open issues for outdated links, info, or to suggest new content.
 Official website comes with some explorer features.  
 More insight into Nyzo can be reached via other sources.
 
-The [API and data sources](./API - Data sources/) page lists the currently available bNyzo explorers and data sources.
+The [API and data sources](API-Data_sources/) page lists the currently available bNyzo explorers and data sources.
 
 ## Wallets
 
