@@ -22,3 +22,7 @@ Unofficial thread:
 
 - https://bitcointalk.org/index.php?topic=5079696.0
 
+## Chinese community
+
+[https://nyzo.me/](https://nyzo.me/) Nyzo Chinese community site
+
