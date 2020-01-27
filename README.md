@@ -9,7 +9,7 @@ Official website is [https://nyzo.co](https://nyzo.co)
 
 [FAQs](FAQs/) and [Tutorials](Tutorials/) are a good place to start and read about Nyzo.
 
-## Contributing
+## Contributing to Awesome Nyzo
 This repo is aiming to be a hub of curated, up to date Nyzo resources.  
 PR and contributions are most welcome.
 
@@ -21,6 +21,11 @@ Official website comes with some explorer features.
 More insight into Nyzo can be reached via other sources.
 
 The [API and data sources](API-Data_sources/) page lists the currently available bNyzo explorers and data sources.
+
+## Meet the Nyzo community
+
+Get help, discuss, contribute.  
+Various places where to find the Zony [Community places](Community-places).
 
 ## Wallets
 
