@@ -30,4 +30,4 @@ Various places where to find the Zony [Community places](Community-places).
 
 ## Wallets
 
-Various [Wallets apps](Wallets/)
+Various [Wallets apps](Wallets/).
