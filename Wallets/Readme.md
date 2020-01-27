@@ -8,9 +8,9 @@ It's a client side javascript application, running in your browser. Private keys
 
 ## Unofficial Android and Ios wallet
 
-A working Nyzo mobile wallet by ciommunity dev Moco  
-https://github.com/mocomaco/Nyzo_Wallet
+A working Nyzo mobile wallet by community dev Moco  
 
+- [Github repo](https://github.com/mocomaco/Nyzo_Wallet)
 - [Google play link](https://play.google.com/store/apps/details?id=io.threedots.nyzo_wallet)
 
 ## HD Wallet by Angainor
