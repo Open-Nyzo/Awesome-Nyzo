@@ -5,9 +5,10 @@ A curated list of awesome Nyzo resources.
 
 Nyzo is an innovative cryptocurrency, featuring 7s block time and no Proof of work nor proof of stake.
 
-Official website is [https://nyzo.co](https://nyzo.co)
+Official website is [https://nyzo.co](https://nyzo.co) and the whitepaper can be found [there](https://nyzo.co/code).
 
-[FAQs](FAQs/) and [Tutorials](Tutorials/) are a good place to start and read about Nyzo.
+[FAQs](FAQs/) and [Tutorials](Tutorials/) are a good place to start and read about Nyzo.  
+See also current [Exchanges](Exchanges/) listing Nyzo.
 
 ## Contributing to Awesome Nyzo
 This repo is aiming to be a hub of curated, up to date Nyzo resources.  
