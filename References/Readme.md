@@ -92,3 +92,137 @@ while True:
 
     sleep(0.01)
 ```
+
+### Cycle events gathering
+
+```
+import requests
+
+res = requests.get('https://nyzo.co/cycleEvents').content.decode('utf-8')
+loc = res.find('<p class="event">')
+
+res_list = res.split('<p class="event">')
+events = {}
+c=0
+
+def wtf():
+    with open('cycle_events','w') as f:
+        f.write(str(events))
+
+for i in res_list:
+    c+=1
+    if c > 1:
+        if 'joined at' in i:
+            struct_type = 'join'
+        elif 'left at' in i:
+            struct_type = 'leave'
+        else:
+            struct_type = 'invalid'
+
+        struct_identifier = i.split('<a href="/status?id=')[1].split('"')[0]
+        struct_block_height = int(i.split('at block ')[1].split(',')[0])
+        struct_cycle_size = i.split('cycle length: ')[1].split('<')[0]
+
+        events[struct_block_height] = {'type': struct_type, 'identifier': struct_identifier, 'cycle_size': struct_cycle_size}
+
+print(len(events), 'cycle events have been written to cycle_events')
+wtf()
+```
+
+### Reward plotting
+
+For this script to work you will need to use the two scripts above (seed_res and cycle_events required)
+
+```
+import matplotlib.pyplot as plt
+import ast
+
+blocks_per_day = 12342
+
+reference_url = 'https://github.com/Open-Nyzo/Awesome-Nyzo/blob/master/References/Readme.md'
+
+display_determinant = input('Please choose the plotting you would like to see\n[0]: Seed tx amount (x: block, y: tx amt)\n[1]: Block reward (x: block, y: block reward)\n[2]: Reward per day (x: block, y: blocks_per_day / cycle size * block_reward)\n[3]: In-cycle verifiers (x: block, y: in-cycle verifiers)\nResponse: ')
+try:
+    display_determinant=int(display_determinant)
+except:
+    display_determinant=4
+
+if display_determinant == 0:
+    print('You have selected SEED TX AMOUNT')
+elif display_determinant == 1:
+    print('You have selected BLOCK REWARD')
+elif display_determinant == 2:
+    print('You have selected REWARD PER DAY')
+elif display_determinant == 3:
+    print('You have selected IN-CYCLE VERIFIERS')
+else:
+    print(display_determinant)
+    print('Wrong input, try again.')
+    exit()
+
+start_block = input('############################\nPlease enter a start block (default=0):')
+try:
+    start_block = int(start_block)
+except:
+    print('Using default start block (0)')
+    start_block = 0
+
+with open('seed_res','r') as f:
+    seed_dict = ast.literal_eval(f.readlines()[0])
+    if len(seed_dict)< 10: exit('Please fetch the seed_res file first\n'+reference_url)
+
+with open('cycle_events', 'r') as f:
+    cycle_events_dict = ast.literal_eval(f.readlines()[0])
+    if len(cycle_events_dict)<10: exit('Please fetch the cycle_events file first\n'+reference_url)
+
+x_l = []
+y_l = []
+y2_l = []
+y3_l = []
+y4_l = []
+
+omitted_blocks = [1295912, 2233904, 4726988]
+seed_blocks = []
+cycle_event_blocks = []
+
+for block in seed_dict:
+    seed_blocks.append(block)
+
+for cycle_event in cycle_events_dict:
+    cycle_event_blocks.append(cycle_event)
+
+for block in seed_dict:
+    if block < start_block:
+        continue
+
+    if block in omitted_blocks:
+        continue
+
+    x_l.append(block)
+    y_l.append(seed_dict[block]['seed_tx_amt'])
+    y2_l.append(seed_dict[block]['0.25%'])
+
+    nearest_cycle_event_block = min(cycle_event_blocks, key=lambda x: abs(x - block))
+    relevant_cycle_event = cycle_events_dict[nearest_cycle_event_block]
+
+    y3_l.append(blocks_per_day / int(relevant_cycle_event['cycle_size']) * seed_dict[block]['0.25%'])
+    y4_l.append(int(relevant_cycle_event['cycle_size']))
+
+plt.xlabel('Block height')
+
+if display_determinant == 0:
+    plt.ylabel('Seed tx amount')
+    plt.plot(x_l, y_l)
+elif display_determinant == 1:
+    plt.ylabel('Block reward')
+    plt.plot(x_l, y2_l)
+elif display_determinant == 2:
+    plt.ylabel('Reward per 24h, per verifier')
+    plt.plot(x_l, y3_l)
+else:
+    plt.ylabel('Verifiers in-cycle')
+    plt.plot(x_l, y4_l)
+
+
+plt.show()
+```
