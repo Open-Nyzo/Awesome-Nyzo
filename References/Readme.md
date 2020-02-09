@@ -141,11 +141,11 @@ blocks_per_day = 12342
 
 reference_url = 'https://github.com/Open-Nyzo/Awesome-Nyzo/blob/master/References/Readme.md'
 
-display_determinant = input('Please choose the plotting you would like to see\n[0]: Seed tx amount (x: block, y: tx amt)\n[1]: Block reward (x: block, y: block reward)\n[2]: Reward per day (x: block, y: blocks_per_day / cycle size * block_reward)\nResponse: ')
+display_determinant = input('Please choose the plotting you would like to see\n[0]: Seed tx amount (x: block, y: tx amt)\n[1]: Block reward (x: block, y: block reward)\n[2]: Reward per day (x: block, y: blocks_per_day / cycle size * block_reward)\n[3]: In-cycle verifiers (x: block, y: in-cycle verifiers)\nResponse: ')
 try:
     display_determinant=int(display_determinant)
 except:
-    display_determinant=3
+    display_determinant=4
 
 if display_determinant == 0:
     print('You have selected SEED TX AMOUNT')
@@ -153,6 +153,8 @@ elif display_determinant == 1:
     print('You have selected BLOCK REWARD')
 elif display_determinant == 2:
     print('You have selected REWARD PER DAY')
+elif display_determinant == 3:
+    print('You have selected IN-CYCLE VERIFIERS')
 else:
     print(display_determinant)
     print('Wrong input, try again.')
@@ -177,6 +179,7 @@ x_l = []
 y_l = []
 y2_l = []
 y3_l = []
+y4_l = []
 
 omitted_blocks = [1295912, 2233904, 4726988]
 seed_blocks = []
@@ -203,7 +206,7 @@ for block in seed_dict:
     relevant_cycle_event = cycle_events_dict[nearest_cycle_event_block]
 
     y3_l.append(blocks_per_day / int(relevant_cycle_event['cycle_size']) * seed_dict[block]['0.25%'])
-
+    y4_l.append(int(relevant_cycle_event['cycle_size']))
 
 plt.xlabel('Block height')
 
@@ -213,9 +216,13 @@ if display_determinant == 0:
 elif display_determinant == 1:
     plt.ylabel('Block reward')
     plt.plot(x_l, y2_l)
-else:
+elif display_determinant == 2:
     plt.ylabel('Reward per 24h, per verifier')
     plt.plot(x_l, y3_l)
+else:
+    plt.ylabel('Verifiers in-cycle')
+    plt.plot(x_l, y4_l)
+
 
 plt.show()
 ```
