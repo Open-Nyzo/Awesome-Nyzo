@@ -39,3 +39,56 @@ while True:
 
     sleep(0.01)
 ```
+
+
+### Emission from seed accounts by Snipe
+
+Emission, historical, daily interval of 12342 blocks
+
+```
+import requests
+from time import sleep
+
+block = 2
+end_block = 6344524
+tx_fee = 0.25
+prev_rew = 598.997856
+block_interval = 12342
+block_dict = {}
+
+def wtf():
+    with open('seed_res', 'w') as f:
+        f.write(str(block_dict))
+
+while True:
+    if block+block_interval > end_block:
+        # wtf()
+        break
+
+    url = 'https://nyzo.co/blockPlain/{}'.format(block)
+    block += block_interval
+
+    res = requests.get(url)
+    if res.status_code == 200:
+        print('success')
+        res = res.content.decode('utf-8')
+        r_pos = res.find('</p><p>amount: ')
+        rel_pc = res[r_pos:r_pos+50].split('∩')[1].split('<')
+        cur_rew = float(rel_pc[0])
+        diff_cur_prev = '{0:.10f}'.format(100 * float(prev_rew-cur_rew)/float(cur_rew))
+
+        prev_rew = cur_rew
+
+        print(cur_rew)
+        print('Days checked:', int(block/block_interval))
+
+        block_dict[block] = {'seed_tx_amt': cur_rew, '0.25%': cur_rew * 0.0025}
+        print(block_dict)
+
+        wtf()
+    else:
+        print('error')
+        sleep(2)
+
+    sleep(0.01)
+```
