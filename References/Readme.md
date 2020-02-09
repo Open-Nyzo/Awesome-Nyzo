@@ -142,4 +142,41 @@ else:
     plt.ylabel('Block reward')
     plt.plot(x_l, y2_l)
 
-plt.show()```
+plt.show()
+```
+
+### Cycle events gathering
+
+```
+import requests
+
+res = requests.get('https://nyzo.co/cycleEvents').content.decode('utf-8')
+loc = res.find('<p class="event">')
+
+res_list = res.split('<p class="event">')
+events = {}
+c=0
+
+def wtf():
+    with open('cycle_events','w') as f:
+        f.write(str(events))
+
+for i in res_list:
+    c+=1
+    if c > 1:
+        if 'joined at' in i:
+            struct_type = 'join'
+        elif 'left at' in i:
+            struct_type = 'leave'
+        else:
+            struct_type = 'invalid'
+
+        struct_identifier = i.split('<a href="/status?id=')[1].split('"')[0]
+        struct_block_height = int(i.split('at block ')[1].split(',')[0])
+        struct_cycle_size = i.split('cycle length: ')[1].split('<')[0]
+
+        events[struct_block_height] = {'type': struct_type, 'identifier': struct_identifier, 'cycle_size': struct_cycle_size}
+
+print(len(events), 'cycle events have been written to cycle_events')
+wtf()
+```
