@@ -92,3 +92,54 @@ while True:
 
     sleep(0.01)
 ```
+
+### Seed tx amount / Block reward plotting by Snipe
+
+Run the fetch script above before using this.
+
+
+```import matplotlib.pyplot as plt
+import ast
+
+display_determinant = input('Please choose the plotting you would like to see\n[0]: Seed tx amount\n[1]: Block reward\nResponse: ')
+try:
+    display_determinant=int(display_determinant)
+except:
+    display_determinant=2
+
+if display_determinant == 0:
+    print('You have selected SEED TX AMOUNT')
+elif display_determinant == 1:
+    print('You have selected BLOCK REWARD')
+else:
+    print(display_determinant)
+    print('Wrong input, try again.')
+    exit()
+
+with open('seed_res','r') as f:
+    seed_dict = ast.literal_eval(f.readlines()[0])
+
+x_l = []
+y_l = []
+y2_l = []
+
+omitted_blocks = [1295912, 2233904, 4726988]
+
+for block in seed_dict:
+    if block in omitted_blocks:
+        continue
+
+    x_l.append(block)
+    y_l.append(seed_dict[block]['seed_tx_amt'])
+    y2_l.append(seed_dict[block]['0.25%'])
+
+plt.xlabel('Block height')
+
+if display_determinant == 0:
+    plt.ylabel('Seed tx amount')
+    plt.plot(x_l, y_l)
+else:
+    plt.ylabel('Block reward')
+    plt.plot(x_l, y2_l)
+
+plt.show()```
