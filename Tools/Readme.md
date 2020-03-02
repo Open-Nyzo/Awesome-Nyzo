@@ -17,4 +17,4 @@ Nyzeye bot on the community discord can watch over your verifiers, sends DM when
 ## Managers and balance checkers
 
 Nyzo Manager is a Python CLI tool for quickly viewing your NYZO balances across all verifiers, wallets, and your qTrade account.  
-[https://github.com/zalzibab/Nyzo-Manager](Nyzo manager)
+[Nyzo manager](https://github.com/zalzibab/Nyzo-Manager)
