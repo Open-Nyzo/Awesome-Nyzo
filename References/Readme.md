@@ -27,6 +27,11 @@ def dlfile(u,s):
             with open(s,'wb') as f:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
+            with open(s,'r')as f:
+                r=f.readline()
+                if 'error reading file:' in r:
+                    print('done')
+                    exit()
             print('done {}'.format(s))
     except Exception as e:
         print(e)
