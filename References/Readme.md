@@ -2,6 +2,53 @@
 
 To be organized better
 
+## Download all consolidated blockFiles from nyzo.co
+```
+import requests
+from time import sleep
+import os.path
+from os import path
+
+start = 0
+done = 0
+end = 999
+end_incr=1000
+
+def conv(n):
+    return "{:06d}".format(n)
+
+def convdir(n):
+    return "{:03d}".format(n)
+
+def dlfile(u,s):
+    try:
+        with requests.get(u,stream=True) as r:
+            r.raise_for_status()
+            with open(s,'wb') as f:
+                for chunk in r.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            print('done {}'.format(s))
+    except Exception as e:
+        print(e)
+        print('failed to download\n{}\n{}'.format(u,s))
+        print('retrying dl after 5s sleep')
+        sleep(5)
+        dlfile(u,s)
+
+for i in range(1,100000):
+    this_end = end+(i*end_incr)
+    this_dir = '/var/lib/nyzo/production/blocks/'+convdir(i)
+    for k in range(start,this_end+1):
+        blockno=conv(k)
+        this_block = blockno+'.nyzoblock'
+
+        if path.exists(this_dir+'/'+this_block):
+            print('already exists: {}'.format(this_block))
+            continue
+
+        dlfile('https://blocks.nyzo.co/blockFiles/'+this_block, this_dir+'/'+this_block)
+ ```
+ 
 ## Seed transactions
 
 ### Official link
