@@ -40,8 +40,7 @@ for i in range(1,100000):
     this_end = end+((i-1)*end_incr)
     this_dir = '/var/lib/nyzo/production/blocks/'+convdir(i)
     for k in range(this_start,this_end+1):
-        pre = (i-1)*1000
-        blockno=conv(k+pre)
+        blockno=conv(k)
         this_block = blockno+'.nyzoblock'
 
         if path.exists(this_dir+'/'+this_block):
