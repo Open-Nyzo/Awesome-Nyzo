@@ -43,7 +43,7 @@ def dlfile(u,s):
 for i in range(1,100000):
     this_start = start+((i-1)*end_incr)
     this_end = end+((i-1)*end_incr)
-    this_dir = '/var/lib/nyzo/production/blocks/'+convdir(i)
+    this_dir = '/var/lib/nyzo/production/blocks/'+convdir(i-1)
     for k in range(this_start,this_end+1):
         blockno=conv(k)
         this_block = blockno+'.nyzoblock'
