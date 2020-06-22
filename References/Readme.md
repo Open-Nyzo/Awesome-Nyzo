@@ -2,6 +2,91 @@
 
 To be organized better
 
+## Validate full node consolidated blocks
+```
+import requests
+from time import sleep
+import traceback
+
+node_pre = 'http://'
+node_base = 'YOUR_FULLNODE_IP_HERE'
+node_app = '/api/'
+
+node_url = node_pre+node_base+node_app
+blockFetchPos = 0
+
+def blockFetchPrint(b):
+    global blockFetchPos
+    if blockFetchPos < 99:
+        blockFetchPos += 1
+    else:
+        blockFetchPos = 0
+        print('Processed 100 block files, position: {}'.format(int(b/1000)))
+
+def getFrozenEdge():
+    res = requests.get(node_url+'frozenEdge')
+    if res.status_code == 200:
+        res = res.json()
+        if len(res['errors']) == 0:
+            return res['result'][0]['height']
+        else:
+            exit(str(res['errors']))
+    else:
+        exit('Could not fetch frozenEdge from node')
+
+def getTransactionSearch(block, itr=0):
+    try:
+        res = requests.get(node_url + 'transactionSearch?blockHeight={}&action=run'.format(block), timeout=15)
+        if res.status_code == 200:
+            try:
+                res = res.json(strict=False)
+                if len(res['errors']) > 0:
+                    print(res['errors'])
+                    return False
+            except:
+                print('Failed to JSON response')
+                traceback.print_exc()
+                print(res.content.decode('utf-8'))
+                return False
+            return True
+        else:
+            if itr < 5:
+                sleep(3)
+                getTransactionSearch(block, itr=itr+1)
+            else:
+                print('Too many failures')
+                return False
+    except:
+        # traceback.print_exc()
+        print('Connection closed, node busy, retrying..')
+        sleep(3)
+        getTransactionSearch(block)
+
+
+def checkAllHistoricalConsolidated():
+    frozenEdge=getFrozenEdge()
+    print('Starting fetch..')
+    potentially_problematic = []
+    start_block = int(frozenEdge/1000)
+
+    for i in range(0,start_block):
+        if i == 0:
+            block = 1
+        else:
+            block = i*1000
+        if getTransactionSearch(block) is False:
+            print('Potentially problematic block file: {:6d}.nyzoblock'.format(int(block/1000)))
+            potentially_problematic.append(int(block/1000))
+
+        blockFetchPrint(block)
+
+    print('Potentially problematic blocks:\n{}'.format(potentially_problematic))
+
+
+checkAllHistoricalConsolidated()
+
+```
+
 ## Download all consolidated blockFiles from nyzo.co
 ```
 import requests
