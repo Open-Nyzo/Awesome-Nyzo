@@ -75,7 +75,7 @@ def checkAllHistoricalConsolidated():
         else:
             block = i*1000
         if getTransactionSearch(block) is False:
-            print('Potentially problematic block file: {:6d}.nyzoblock'.format(int(block/1000)))
+            print('Potentially problematic block file: {:06d}.nyzoblock'.format(int(block/1000)))
             potentially_problematic.append(int(block/1000))
 
         blockFetchPrint(block)
