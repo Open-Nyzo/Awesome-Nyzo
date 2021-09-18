@@ -7,18 +7,28 @@
 A raw block explorer, on the official website.  
 [Blocks on Nyzo.Co](https://nyzo.co/block/)
 
+### Nyzo.Today Explorer and API
+
+[https://Nyzo.today](https://nyzo.today/)
+
+A full featured Nyzo, Tokens and NFT Explorer by Iyomisc.  
+Balances, Blocks, Transactions Explorer.  
+
+Support for Nytro powered Tokens and NFT.  
+Helpers for Tokens and NFTs.
+
+
 ### Unofficial Explorer
 
-A user operated Nyzo Explorer [http://nyzo-explorer.com/](http://nyzo-explorer.com/)
+A user operated Nyzo Explorer [http://nyzo-explorer.com/](http://nyzo-explorer.com/)  
+Update, September 2021: seems down.
 
 ### Explorer by Snipe
 
 A WIP explorer by community user Snipe.  
-Comes with graphical views as well as some APIS.
+Came with graphical views as well as some APIS.
 
-- Link [https://explorer.nyzo.net/](https://explorer.nyzo.net/)
-- [Richlist](https://explorer.nyzo.net/client/richlist.html)
-- [richlist API](https://explorer.nyzo.net/client/json/balance_list.json)
+Deprecated, domain is not nyzo related anymore. Left for reference.
 
 ## Data sources
 
@@ -35,3 +45,18 @@ Therefore every verifier has its own view of the performance of others, that may
 Joins logs can be useful to troubleshoot voting and join issues.
 
 - [Joins logs](http://elefant.hamster.science/joins.txt) thanks to @Fydel
+
+### APIs
+
+#### Nyzo client
+
+One run mode of the Nyzo verifier is as client.  
+Such a client exposes http and json api.  
+A client maintained by the founders is to be found at [client.nyzo.co](https://client.nyzo.co)
+
+### Nyzo.today
+
+Nyzo.today provides an http api, get in touch with Iyomisc for the Nyzo part.
+
+The Tokens and NFT api has some doc available at:
+https://github.com/Open-Nyzo/Project-Nytro/blob/main/doc/nyzo_today_api.md
